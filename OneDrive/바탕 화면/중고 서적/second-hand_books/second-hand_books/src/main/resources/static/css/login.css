@@ -1,0 +1,267 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-image: url(../img/배경.jpg);
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+
+/* 회원가입, 로그인 큰 틀 */
+#frame {
+    width: 60%;
+    height: 90%;
+    margin: auto;
+    display: flex;
+    position: relative;
+    box-shadow: 10px 10px 10px rgb(102, 102, 102);
+}
+
+/* 로그인, 회원가입 form */
+#loginForm, #joinForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(27, 64, 126);
+    width: 100%;
+    height: 100%;
+}
+
+#loginForm {
+    gap: 15%;
+    background: linear-gradient(.25turn, rgb(27, 64, 126), 70% ,rgb(13, 49, 111));
+}
+
+#joinForm {
+    gap: 5%;
+    background: linear-gradient(.25turn, rgb(13, 49, 111), 10% ,rgb(27, 64, 126));
+}
+
+/* 로그인, 회원가입 각각 div */
+#joinFormDiv, #loginFormDiv {
+    width: 50%;
+    height: 100%;
+}
+
+/* input 태그가 모여있는 있는 div */
+#loginDiv {
+    width: 80%;
+    height: 40%;
+}
+
+#joinDiv {
+    width: 80%;
+    height: 70%;
+}
+
+/* 각각 input 태그 div */
+.loginOne {
+    height: calc(100% / 4);
+}
+
+.joinOne {
+    height: calc(100% / 9);
+}
+
+.loginOne, .joinOne {
+    text-align: center;
+    color: white;
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+}
+
+/* 아이디, 비밀번호 찾기 div */
+#loginSearch {
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+}
+
+/* 아이디, 비밀번호 찾기 문구 */
+#loginSearch span {
+    cursor: pointer;
+}
+
+#loginSearch span:hover {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+/* 로그인, 회원가입 고래 img, img div */
+#loginImg, #loginDiv, #joinDiv, #joinImg {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#whaleImg {
+    filter: invert(100%);
+    display: block;
+    width: 100%;
+}
+
+#loginImg {
+    width: 50%;
+}
+
+#whaleImgJoin {
+    filter: invert(100%);
+    display: block;
+    width: 100%;
+}
+
+#joinImg {
+    width: 20%;
+}
+
+/* 로그인, 회원가입, 이메일 인증 버튼, 아이디 중복 체크 버튼 */
+#loginBtn, #joinBtn, #joinEmailBtn, #idChkBtn {
+    font-weight: bolder;
+    background-color: transparent;
+    color: white;
+    font-size: 30px;
+    border: none;
+    cursor: pointer;
+}
+
+#joinEmailBtn, #idChkBtn {
+    font-size: 15px;
+    height: 45%;
+}
+
+/* 로그인, 회원가입 input 태그 */
+.loginText, .joinText {
+    width: 100%;
+    height: 30%;
+    border: none;
+    border-bottom: 2px solid;
+    background-color: transparent;
+    color: white;
+    font-weight: bolder;
+}
+
+.loginText::placeholder, .joinText::placeholder {
+    font-weight: bolder;
+    color: white;
+}
+
+/* input 태그 자동 완성 */
+.loginText:-webkit-autofill,
+.loginText:-webkit-autofill:hover,
+.loginText:-webkit-autofill:focus,
+.loginText:-webkit-autofill:active,
+.joinText:-webkit-autofill,
+.joinText:-webkit-autofill:hover,
+.joinText:-webkit-autofill:focus,
+.joinText:-webkit-autofill:active {
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0 1000px transparent inset;
+    box-shadow: 0 0 0 1000px transparent inset;
+    font-weight: bolder;
+    transition: background-color 5000s ease-in-out 0s;
+    border-color: white;
+}
+
+/* input 태그 유효하지 않은 경우 */
+.joinText:invalid, .loginText:invalid {
+    border-color: red;
+}
+
+/* input 태그 유효한 경우 */
+.joinText:valid, .loginText:valid {
+    border-color: white;
+}
+
+/* input 태그 값이 없을 때 */
+.joinText:placeholder-shown, .loginText:placeholder-shown {
+    border-color: white;
+}
+
+/* 이메일, 전화번호, 주민번호 div */
+#emailDiv, #telDiv, #idNumDiv, #idDiv {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 이메일 input 태그 */
+#joinEmail {
+    width: 70%;
+}
+
+/* 아이디 input 태그 */
+#joinId {
+    width: 75%;
+}
+
+/* 전화번호 input 태그 */
+.joinTel {
+    width: 25%;
+}
+
+/* 주민번호 input 태그 */
+.joinIdNum {
+    width: calc(87% / 2);
+}
+
+/* 로그인, 회원가입 cover div */
+#joinCover, #loginCover, #coverDiv {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    transition: 1.5s;
+    transform-style: preserve-3d;
+    transform-origin: left;
+    right: 0;
+}
+
+#joinCover, #loginCover {
+    backface-visibility: hidden;
+    z-index: 2;
+    cursor: pointer;
+    font-weight: bolder;
+}
+
+#joinCover {
+    background: linear-gradient(.25turn, rgb(219, 219, 219), 10% ,white);
+}
+
+#loginCover {
+    background: linear-gradient(.25turn, white, 70% ,rgb(219, 219, 219));
+    transform-origin: right;
+    left: 0;
+    transform: rotateY(-180deg);
+}
+
+/* 회원가입 cover 제목 */
+#joinCoverTitle, #loginCoverTitle {
+    height: 50%;
+    position: relative;
+}
+
+/* 회원가입 cover img */
+#joinCoverImg, #loginCoverImg {
+    width: 30%;
+    position: absolute;
+    left: 50%;
+    margin-left: -15%;
+    bottom: 10%;
+    filter: opacity(0.5) drop-shadow(0 0 0 rgb(0, 94, 255));
+}
+
+/* 회원 가입 cover 본문 */
+#joinCoverSection, #loginCoverSection {
+    height: 50%;
+    color: rgb(27, 64, 126);
+    gap: 5%;
+    text-align: center;
+}
+
+#joinCoverSection span, #loginCoverSection span {
+    font-size: 40px;
+}
