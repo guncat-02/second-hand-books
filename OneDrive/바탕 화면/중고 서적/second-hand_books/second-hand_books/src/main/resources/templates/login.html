@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="kor">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<body>
+<div id="frame">
+    <!-- 회원가입 cover -->
+    <div id="joinCover">
+        <div id="joinCoverTitle">
+            <img src="/img/고래-removebg-preview.png" id="joinCoverImg">
+        </div>
+        <div id="joinCoverSection">
+            <span>01. GO JOIN</span>
+        </div>
+    </div>
+    <!-- 비침 방지 cover -->
+    <div id="coverDiv"></div>
+    <!-- 로그인 cover -->
+    <div id="loginCover">
+        <div id="loginCoverTitle">
+            <img src="/img/고래-removebg-preview.png" id="loginCoverImg">
+        </div>
+        <div id="loginCoverSection">
+            <span>02. GO LOGIN</span>
+        </div>
+    </div>
+    <!-- 로그인 -->
+    <div id="loginFormDiv">
+        <form id="loginForm">
+            <div id="loginImg">
+                <img src="/img/고래-removebg-preview.png" id="whaleImg">
+            </div>
+            <div id="loginDiv">
+                <div class="loginOne">
+                    <input type="text" id="id" name="id" class="loginText" placeholder="아이디" required>
+                </div>
+                <div class="loginOne">
+                    <input type="password" id="pass" name="pass" class="loginText" placeholder="비밀번호" required>
+                </div>
+                <div class="loginOne" id="loginSearch">
+                    <span>아이디 찾기</span>
+                    <span>비밀번호 찾기</span>
+                </div>
+                <div class="loginOne">
+                    <input type="submit" id="loginBtn" value="LOGIN">
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- 회원가입 -->
+    <div id="joinFormDiv">
+        <form id="joinForm" onsubmit="return joinChk()" action="/users" method="post">
+            <div id="joinImg">
+                <img src="/img/고래-removebg-preview.png" id="whaleImgJoin">
+            </div>
+            <div id="joinDiv">
+                <div class="joinOne" id="idDiv">
+                    <input type="text" id="joinId" name="id" class="joinText" placeholder="아이디" maxlength="12" minlength="3" pattern="(?=.*[a-z])[a-zA-Z\d\-_!@*]+" title="영어 대소문자, 숫자, 특수문자(-_!@*)만 사용 가능합니다. (영어 소문자 필수 입력)" required>
+                    <input type="button" id="idChkBtn" value="중복체크">
+                </div>
+                <div class="joinOne">
+                    <input type="password" id="joinPass" class="joinText" placeholder="비밀번호" maxlength="20" minlength="2" pattern="[a-zA-Z\d\-_!@*]+" title="영어 대소문자, 숫자, 특수문자(-_!@*)만 사용 가능합니다." required>
+                </div>
+                <div class="joinOne">
+                    <input type="password" id="joinPassChk" name="pass" class="joinText" placeholder="비밀번호 확인" required>
+                </div>
+                <div class="joinOne">
+                    <input type="text" id="joinName" name="name" class="joinText" placeholder="이름" required>
+                </div>
+                <div class="joinOne" id="idNumDiv">
+                    <input type="text" id="joinIdNum_1" class="joinText joinIdNum" placeholder="주민번호" maxlength="6" pattern="\d+" required>
+                    <span>-</span>
+                    <input type="text" id="joinIdNum_2" class="joinText joinIdNum" placeholder="" maxlength="7" pattern="\d+" required>
+                    <input type="hidden" name="idNum" id="idNumAll">
+                </div>
+                <div class="joinOne" id="telDiv">
+                    <input type="text" id="joinTel_1" class="joinText joinTel" placeholder="전화번호" maxlength="3" pattern="\d+" required>
+                    <span>-</span>
+                    <input type="text" id="joinTel_2" class="joinText joinTel" maxlength="4" placeholder="" pattern="\d+" required>
+                    <span>-</span>
+                    <input type="text" id="joinTel_3" class="joinText joinTel" maxlength="4" placeholder="" pattern="\d+" required>
+                    <input type="hidden" name="tel" id="telAll">
+                </div>
+                <div class="joinOne" id="emailDiv">
+                    <input type="email" id="joinEmail" name="email" class="joinText" placeholder="이메일" pattern=".*@.*" required title="올바른 이메일 형식으로 적어주세요">
+                    <input type="button" id="joinEmailBtn" value="이메일 인증">
+                </div>
+                <div class="joinOne">
+                    <input type="text" id="joinEmailChk" class="joinText" placeholder="인증 코드" required>
+                </div>
+                <div class="joinOne">
+                    <input type="submit" id="joinBtn" value="JOIN">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<script>
+    let code;
+    let resultId;
+
+    /**
+     * joinCover 클릭 시 이벤트 처리
+     * 로그인 form을 보여준다
+     */
+    $('#joinCover').click(function() {
+        $('#joinCover').css('transform', 'rotateY(-180deg)');
+        $('#loginCover').css('transform', 'rotateY(0)');
+        $('#coverDiv').css('transform', 'rotateY(-180deg)')
+    })
+
+    /**
+     * loginCover 클릭 시 이벤트 처리
+     * 회원가입 form을 보여준다
+     */
+    $('#loginCover').click(function() {
+        $('#loginCover').css('transform', 'rotateY(-180deg)');
+        $('#joinCover').css('transform', 'rotateY(0)');
+        $('#coverDiv').css('transform', 'rotateY(0)')
+    })
+
+    /**
+     * 회원가입 유효성 체크
+     * @returns {boolean} true일 경우 formdata를 서버로 전달
+     */
+    function joinChk() {
+        const idNum = $('.joinIdNum');
+        const telNum = $('.joinTel');
+        $('#idNumAll').val(addNum(idNum));
+        $('#telAll').val(addNum(telNum));
+        if(passChk() == true && emailChk() == true && idChk() == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 비밀번호, 비밀번호 확인 란의 값이 동일한 지 확인
+     * @returns {boolean} true일 경우 다음 단계로 진행
+     */
+    function passChk() {
+        if($('#joinPassChk').val() == $('#joinPass').val()) {
+            return true;
+        } else {
+            alert('비밀번호가 일치하지 않습니다.')
+            return false;
+        }
+    }
+
+    /**
+     * 매개변수 배열의 val 값을 연결한 값 반환
+     * @param list
+     * @returns {string} val 값을 연결한 값
+     */
+    function addNum(list) {
+        let number ="";
+        list.each(function() {
+            number += $(this).val();
+        })
+        return number;
+    }
+
+    /**
+     * 이메일 인증 이벤트 처리
+     */
+    $('#joinEmailBtn').click(function() {
+        const email = $('#joinEmail').val();
+        if(email != null && email.trim() != "") {
+            $.ajax({
+                url: "/mail/"+email,
+                type: "post",
+                success: function(result) {
+                    code = result;
+                    console.log(code)
+                    alert("메일이 전송되었습니다.");
+                },
+                error: function() {
+                    alert("이메일 전송에 실패했습니다.");
+                }
+            })
+        } else {
+            alert('이메일이 입력되지 않았습니다.');
+        }
+    })
+
+    /**
+     * 이메일 인증 체크
+     * @returns {boolean} true일 경우 다음 단계로 진행
+     */
+    function emailChk() {
+        const emailCode = $('#joinEmailChk').val();
+        if(emailCode == code) {
+            return true;
+        } else {
+            alert("인증번호를 다시 확인해주세요.")
+            return false;
+        }
+    }
+
+    /**
+     * 아이디가 중복체크 받은 아이디와 같은 지 확인
+     * @returns {boolean} true일 경우 다음 단계로 진행
+     */
+    function idChk() {
+        const id = $('#joinId').val();
+        if(id == resultId) {
+            return true;
+        } else {
+            alert("중복체크를 해주세요.")
+            return false;
+        }
+    }
+
+    /**
+     * 아이디 중복 체크 버튼 이벤트 처리
+     */
+    $('#idChkBtn').click(function() {
+        const id = $('#joinId').val();
+        $.ajax({
+            url: "/users/"+id,
+            type: "get",
+            success: function(result) {
+                if(result == true) {
+                    resultId = id;
+                    alert("중복되지 않은 아이디입니다.")
+                } else {
+                    alert("중복된 아이디 입니다.")
+                }
+            },
+            error: function() {
+                alert('다시 한 번 시도해주세요.')
+            }
+        })
+    })
+</script>
+</html>
